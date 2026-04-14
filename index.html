@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capa — Meu Dinheiro no Controle</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #0c0a09;
+    --warm: #fbbf24;
+    --warm-deep: #d97706;
+    --warm-glow: #fef3c7;
+    --cream: #fffbeb;
+    --red-pain: #dc2626;
+    --red-dim: #7f1d1d;
+    --green-hope: #22c55e;
+    --text: #fafaf9;
+    --text-dim: #a8a29e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  .cover-wrapper {
+    width: 100%;
+    max-width: 440px;
+    margin: 1rem;
+    position: relative;
+  }
+
+  /* ======= MAIN COVER CARD ======= */
+  .cover {
+    position: relative;
+    background: linear-gradient(165deg, #1c1917 0%, #0c0a09 40%, #1a0f00 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(251,191,36,0.1),
+      0 25px 80px rgba(0,0,0,0.8),
+      0 0 120px rgba(251,191,36,0.06);
+  }
+
+  /* Grain overlay */
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Golden light glow at top */
+  .cover::after {
+    content: '';
+    position: absolute;
+    top: -60%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(251,191,36,0.12) 0%, rgba(217,119,6,0.04) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: glow-pulse 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow-pulse {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+  }
+
+  .cover-content {
+    position: relative;
+    z-index: 2;
+    padding: 2.5rem 2rem;
+  }
+
+  /* ======= PAIN SECTION (TOP) ======= */
+  .pain-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(220,38,38,0.12);
+    border: 1px solid rgba(220,38,38,0.25);
+    color: #fca5a5;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 1.8rem;
+    animation: fadeSlideDown 0.8s ease both;
+  }
+
+  .pain-tag .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--red-pain);
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .pain-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 6vw, 2.1rem);
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+    animation: fadeSlideDown 0.8s ease 0.15s both;
+  }
+
+  .pain-headline .highlight-red {
+    color: #fca5a5;
+    text-decoration: line-through;
+    text-decoration-color: rgba(220,38,38,0.5);
+    text-decoration-thickness: 2px;
+  }
+
+  .pain-headline .highlight-gold {
+    background: linear-gradient(135deg, var(--warm), var(--warm-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
+
+  .pain-bullets {
+    list-style: none;
+    margin-bottom: 2rem;
+    animation: fadeSlideDown 0.8s ease 0.3s both;
+  }
+
+  .pain-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 0.7rem;
+  }
+
+  .pain-bullets .icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 0.9rem;
+  }
+
+  .pain-bullets strong {
+    color: #d6d3d1;
+  }
+
+  /* ======= DIVIDER ======= */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0.5rem 0 2rem;
+    animation: fadeSlideDown 0.8s ease 0.45s both;
+  }
+
+  .divider .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(251,191,36,0.3), transparent);
+  }
+
+  .divider .arrow {
+    color: var(--warm);
+    font-size: 0.9rem;
+    animation: bounce-down 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
+  /* ======= DREAM SECTION ======= */
+  .dream-section {
+    animation: fadeSlideDown 0.8s ease 0.55s both;
+  }
+
+  .dream-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(251,191,36,0.1);
+    border: 1px solid rgba(251,191,36,0.25);
+    color: var(--warm);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 0.4rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 1.2rem;
+  }
+
+  .dream-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 1.2rem;
+    background: linear-gradient(135deg, var(--warm-glow), var(--warm), var(--warm-deep));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .dream-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .dream-feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: #d6d3d1;
+  }
+
+  .dream-feature .check {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(34,197,94,0.12);
+    border: 1px solid rgba(34,197,94,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    color: var(--green-hope);
+  }
+
+  /* ======= PRODUCT VISUAL ======= */
+  .product-visual {
+    background: linear-gradient(135deg, rgba(251,191,36,0.06), rgba(217,119,6,0.03));
+    border: 1px solid rgba(251,191,36,0.15);
+    border-radius: 14px;
+    padding: 1.2rem;
+    margin-bottom: 1.8rem;
+    position: relative;
+    animation: fadeSlideDown 0.8s ease 0.65s both;
+  }
+
+  .product-visual::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(251,191,36,0.2), transparent, rgba(251,191,36,0.1));
+    z-index: -1;
+    filter: blur(1px);
+  }
+
+  .pv-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.8rem;
+    font-size: 0.75rem;
+    color: var(--warm);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .pv-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .pv-item {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 0.7rem 0.8rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .pv-item .emoji {
+    font-size: 1rem;
+  }
+
+  .pv-item span {
+    line-height: 1.3;
+  }
+
+  /* ======= PRICE/CTA ======= */
+  .cta-section {
+    text-align: center;
+    animation: fadeSlideDown 0.8s ease 0.75s both;
+  }
+
+  .price-was {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-decoration: line-through;
+    margin-bottom: 0.2rem;
+  }
+
+  .price-now {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--warm);
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0 40px rgba(251,191,36,0.3);
+  }
+
+  .price-sub {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 1.2rem;
+  }
+
+  .cta-button {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--warm), var(--warm-deep));
+    color: var(--dark);
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(251,191,36,0.3);
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(251,191,36,0.4);
+  }
+
+  .cta-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+    animation: shine 3s ease-in-out infinite;
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-100%) rotate(0); }
+    100% { transform: translateX(100%) rotate(0); }
+  }
+
+  .guarantee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .guarantee .shield {
+    color: var(--green-hope);
+  }
+
+  /* ======= SOCIAL PROOF BAR ======= */
+  .social-proof {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    background: rgba(251,191,36,0.04);
+    border-top: 1px solid rgba(251,191,36,0.08);
+    animation: fadeSlideDown 0.8s ease 0.85s both;
+  }
+
+  .sp-item {
+    text-align: center;
+  }
+
+  .sp-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--warm);
+    line-height: 1;
+  }
+
+  .sp-label {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .sp-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(251,191,36,0.15);
+  }
+
+  /* ======= URGENCY STRIP ======= */
+  .urgency {
+    text-align: center;
+    padding: 0.7rem;
+    background: linear-gradient(90deg, var(--red-dim), rgba(127,29,29,0.6));
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #fca5a5;
+    letter-spacing: 0.5px;
+    border-radius: 0 0 24px 24px;
+    animation: fadeSlideDown 0.8s ease 0.95s both;
+  }
+
+  /* ======= FLOATING BADGE ======= */
+  .badge {
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    background: linear-gradient(135deg, var(--red-pain), #b91c1c);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(220,38,38,0.4);
+    z-index: 10;
+    animation: fadeSlideDown 0.6s ease 0.2s both;
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ======= CAPTION BELOW ======= */
+  .caption {
+    text-align: center;
+    padding: 1.5rem 1rem 0.5rem;
+    font-size: 0.7rem;
+    color: #57534e;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="cover-wrapper">
+
+  <div class="cover">
+    <div class="badge">LANÇAMENTO</div>
+
+    <div class="cover-content">
+
+      <!-- PAIN -->
+      <div class="pain-tag">
+        <span class="dot"></span>
+        Isso parece familiar?
+      </div>
+
+      <h1 class="pain-headline">
+        Você trabalha o mês inteiro e o dinheiro
+        <span class="highlight-red">some antes do dia 30</span>
+      </h1>
+
+      <ul class="pain-bullets">
+        <li>
+          <span class="icon">😔</span>
+          <span>Sente <strong>culpa</strong> cada vez que gasta com algo pra você</span>
+        </li>
+        <li>
+          <span class="icon">🏠</span>
+          <span>Sonha com a <strong>casa própria</strong> mas acha que nunca vai conseguir</span>
+        </li>
+        <li>
+          <span class="icon">📱</span>
+          <span>Já baixou apps de finanças e <strong>desistiu em 3 dias</strong></span>
+        </li>
+        <li>
+          <span class="icon">😰</span>
+          <span>Tem <strong>medo</strong> de olhar o extrato no fim do mês</span>
+        </li>
+      </ul>
+
+      <!-- DIVIDER -->
+      <div class="divider">
+        <div class="line"></div>
+        <span class="arrow">E se existisse um jeito diferente? ↓</span>
+        <div class="line"></div>
+      </div>
+
+      <!-- DREAM -->
+      <div class="dream-section">
+        <div class="dream-tag">🔑 Apresentando</div>
+
+        <h2 class="dream-headline">
+          Meu Dinheiro no Controle — O Simulador que transforma seu sonho em plano
+        </h2>
+
+        <div class="dream-features">
+          <div class="dream-feature">
+            <div class="check">✓</div>
+            <span>Veja <strong>exatamente</strong> quanto falta pro seu sonho — e quando ele chega</span>
+          </div>
+          <div class="dream-feature">
+            <div class="check">✓</div>
+            <span>Cada real guardado gera uma <strong>mensagem que te motiva</strong> a continuar</span>
+          </div>
+          <div class="dream-feature">
+            <div class="check">✓</div>
+            <span>Se você mexer no dinheiro, <strong>o sonho te avisa</strong> — e você pensa duas vezes</span>
+          </div>
+          <div class="dream-feature">
+            <div class="check">✓</div>
+            <span>Funciona no celular, é simples, e <strong>não precisa de app</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCT VISUAL -->
+      <div class="product-visual">
+        <div class="pv-header">📦 O que você recebe</div>
+        <div class="pv-items">
+          <div class="pv-item"><span class="emoji">📊</span><span>Planilha completa com 16 abas</span></div>
+          <div class="pv-item"><span class="emoji">🎯</span><span>Simulador de cenários</span></div>
+          <div class="pv-item"><span class="emoji">💰</span><span>Caixinha do Sonho emocional</span></div>
+          <div class="pv-item"><span class="emoji">📹</span><span>Vídeos tutoriais passo a passo</span></div>
+          <div class="pv-item"><span class="emoji">📋</span><span>Controle mensal automático</span></div>
+          <div class="pv-item"><span class="emoji">👥</span><span>Grupo exclusivo de apoio</span></div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <div class="price-was">De R$ 97</div>
+        <div class="price-now">R$ 37</div>
+        <div class="price-sub">ou 4x de R$ 10,16 no cartão · Pix com desconto</div>
+
+        <a href="https://pay.hotmart.com/U105386661H" class="cta-button" style="text-decoration:none;display:block;">
+          QUERO REALIZAR MEU SONHO →
+        </a>
+
+        <div class="guarantee">
+          <span class="shield">🛡️</span>
+          Garantia de 7 dias — se não gostar, devolvemos seu dinheiro
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SOCIAL PROOF -->
+    <div class="social-proof">
+      <div class="sp-item">
+        <div class="sp-number">16</div>
+        <div class="sp-label">Abas prontas</div>
+      </div>
+      <div class="sp-divider"></div>
+      <div class="sp-item">
+        <div class="sp-number">365</div>
+        <div class="sp-label">Fórmulas automáticas</div>
+      </div>
+      <div class="sp-divider"></div>
+      <div class="sp-item">
+        <div class="sp-number">12</div>
+        <div class="sp-label">Meses cobertos</div>
+      </div>
+    </div>
+
+    <!-- URGENCY -->
+    <div class="urgency">
+      ⚡ Preço de lançamento por tempo limitado — depois volta pra R$ 97
+    </div>
+
+  </div>
+
+  <div class="caption">
+    Funciona no Google Sheets (grátis) · Celular ou computador · Sem app
+  </div>
+
+</div>
+
+</body>
+</html>
